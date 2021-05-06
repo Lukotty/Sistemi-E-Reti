@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-//Aggiunta delle seguenti librerie:
-using System.Threading;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
+//Aggiunta delle seguenti librerie:
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace EsercizioSocket
 {
@@ -27,25 +18,39 @@ namespace EsercizioSocket
         IPEndPoint sourceSocket;
         string ipaddress;
         int port;
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public MainWindow() => InitializeComponent();
 
         private void btnInviaMSG_Click(object sender, RoutedEventArgs e)
         {
-            SocketSend(IPAddress.Parse(ipaddress), port, txtMessage.Text);
+            try
+            {
+                SocketSend(IPAddress.Parse(ipaddress), port, txtMessage.Text);
+            }
+            catch (Exception exe)
+            {
+                MessageBox.Show(exe.Message, "Errore");
+            }
         }
 
         private void btnCreaSocket_Click(object sender, RoutedEventArgs e)
         {
-            ipaddress = txtIP.Text;
-            port = int.Parse(txtPort.Text);
-            sourceSocket = new IPEndPoint(IPAddress.Parse("10.73.0.22"), 56000);
-            //aggiungere controlli sul contenuto delle textbox:
-            btnInviaMSG.IsEnabled = true;
-            Thread ricezione = new Thread(new ParameterizedThreadStart(SocketReceive));
-            ricezione.Start(sourceSocket);
+            try
+            {
+                if (txtIP.Text != string.Empty && txtPort.Text != string.Empty)
+                {
+                    ipaddress = txtIP.Text;
+                    port = int.Parse(txtPort.Text);
+                    sourceSocket = new IPEndPoint(IPAddress.Parse("10.73.0.22"), 56000);
+                    btnInviaMSG.IsEnabled = true;
+                    Thread ricezione = new Thread(new ParameterizedThreadStart(SocketReceive));
+                    ricezione.Start(sourceSocket);
+                }
+                else MessageBox.Show("Inserisci correttamente l' indirizzo IP e la porta", "Errore");
+            }
+            catch (Exception exe)
+            {
+                MessageBox.Show(exe.Message, "Errore");
+            }
         }
         public async void SocketReceive(object socketsource)
         {
@@ -80,5 +85,9 @@ namespace EsercizioSocket
             s.SendTo(byteSent, remote_endpoint);
             txtChat.Text += $"[Tu] " + message + "\n";
         }
+
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e) => DragMove();
+
+        private void Button_Click(object sender, RoutedEventArgs e) => Environment.Exit(1);
     }
 }
