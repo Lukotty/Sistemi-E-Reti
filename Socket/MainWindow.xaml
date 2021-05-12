@@ -212,14 +212,15 @@
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="0.15*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock x:Name="txtChat" Background="Black" HorizontalAlignment="Center" Width="598"/>
+                <TextBlock x:Name="txtChat" Background="Black" Foreground="#e0e0e0" HorizontalAlignment="Center" Width="598"/>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="txtMessage" BorderThickness="0" Grid.Column="0" HorizontalAlignment="Left" Foreground="#e0e0e0" Background="#546e7a" FontSize="18" VerticalAlignment="Center" Height="54" Width="555" Grid.ColumnSpan="2" Margin="0,0,0,1"/>
-                    <Button x:Name="btnInviaMSG" Background="#37474f" Foreground="#e0e0e0" Width="Auto" FontSize="20" Height="54" VerticalAlignment="Top" Click="btnInviaMSG_Click" Content="➤" Style="{DynamicResource RoundedButton}" Margin="555,0,0,0"/>
+                    <TextBox x:Name="txtMessage" BorderThickness="0" Grid.Column="0" HorizontalAlignment="Left" Foreground="#e0e0e0" Background="#546e7a" FontSize="18" VerticalAlignment="Center" Height="54" Width="508" Margin="0,0,0,1" KeyUp="txtMessage_KeyUp"/>
+                    <Button x:Name="btnDice" IsEnabled="false" Background="#37474f" Foreground="#e0e0e0" Width="Auto" FontSize="20" Height="54" VerticalAlignment="Top" Content="🎲" Style="{DynamicResource RoundedButton}" Margin="513,0,45,0" Click="btnDice_Click"/>
+                    <Button x:Name="btnInviaMSG" Background="#37474f" Foreground="#e0e0e0" Width="Auto" FontSize="20" Height="54" VerticalAlignment="Top" Click="btnInviaMSG_Click" Content="➤" Style="{DynamicResource RoundedButton}" Margin="558,0,0,0"/>
                 </Grid>
             </Grid>
         </Grid>
